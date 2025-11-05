@@ -8,6 +8,7 @@ namespace UnityDemoA
     {
         [Header( "References" )]
         [SerializeField, Self] private Rigidbody rb;
+        [SerializeField, Child] private Animator animator;
         [SerializeField] private Transform avatar;
         [SerializeField, Anywhere] private InputReader input;
         
@@ -28,6 +29,16 @@ namespace UnityDemoA
         }
 
         private void Start() => input.EnableInputActions();
+
+        private void Update()
+        {
+            UpdateAnimator();
+        }
+
+        private void UpdateAnimator()
+        {
+            animator.SetFloat("Speed", currentSpeed);
+        }
 
         private void FixedUpdate()
         {
