@@ -22,6 +22,9 @@ namespace UnityDemoA
         
         private float currentSpeed;
         private float velocity;
+        
+        // Animator parameters
+        static readonly int SpeedHash = Animator.StringToHash("Speed");
 
         private void Awake()
         {
@@ -37,7 +40,7 @@ namespace UnityDemoA
 
         private void UpdateAnimator()
         {
-            animator.SetFloat("Speed", currentSpeed);
+            animator.SetFloat(SpeedHash, currentSpeed);
         }
 
         private void FixedUpdate()
