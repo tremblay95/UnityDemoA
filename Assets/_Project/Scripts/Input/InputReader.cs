@@ -10,6 +10,7 @@ namespace UnityDemoA
     {
         public event UnityAction<Vector2> Move = delegate { };
         public event UnityAction<Vector2, bool> Look = delegate { };
+        public event UnityAction Attack = delegate { };
         
         private PlayerInputActions _inputActions;
         
@@ -41,7 +42,10 @@ namespace UnityDemoA
 
         public void OnAttack(CallbackContext context)
         {
-            // noop
+            if (context.started)
+            {
+                Attack.Invoke();
+            }
         }
 
         public void OnInteract(CallbackContext context)
