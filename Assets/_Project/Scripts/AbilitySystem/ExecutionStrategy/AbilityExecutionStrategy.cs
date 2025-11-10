@@ -4,6 +4,6 @@ namespace UnityDemoA
 {
     public abstract class AbilityExecutionStrategy : ScriptableObject
     {
-        public abstract void Execute(IAbilityEffect effect, Transform source, Transform target);
+        public abstract void Execute(AbilityEffect effect, Transform source, Transform target);
     }
 }

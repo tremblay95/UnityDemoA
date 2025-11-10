@@ -8,9 +8,9 @@ namespace UnityDemoA
         // Todo: consider using a coroutine instead of a timer
         private CountdownTimer timer;
         
-        public DelayState(PlayerController player, Animator animator, float stateDuration) : base(player, animator)
+        public DelayState(PlayerController player, Animator animator, DelayStateData data) : base(player, animator)
         {
-            timer = new CountdownTimer(stateDuration);
+            timer = new CountdownTimer(data.duration);
         }
         
         public override void OnEnter() => timer.Start();

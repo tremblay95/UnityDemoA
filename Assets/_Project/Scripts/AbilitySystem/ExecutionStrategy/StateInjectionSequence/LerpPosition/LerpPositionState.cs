@@ -9,14 +9,14 @@ namespace UnityDemoA
         private readonly Vector3 initialPosition;
         private readonly Vector3 targetPosition;
         
-        public LerpPositionState(PlayerController player, Animator animator, Vector3 initialPosition, Vector3 targetPosition, float stateDuration) : base(player, animator)
+        public LerpPositionState(PlayerController player, Animator animator, LerpPositionStateData data, Transform source, Transform target) : base(player, animator)
         {
-            timer = new CountdownTimer(stateDuration);
-            timer.OnStart += () => player.transform.position = initialPosition;
-            timer.OnStop += () => player.transform.position = targetPosition;
+            initialPosition = data.initialPositionRelativeTo.GetPosition(source.position, target.position, data.initialPosition);
+            targetPosition = data.targetPositionRelativeTo.GetPosition(source.position, target.position, data.targetPosition);
             
-            this.initialPosition = initialPosition;
-            this.targetPosition = targetPosition;
+            timer = new CountdownTimer(data.duration);
+            timer.OnStart += () => player.transform.position = data.initialPosition;
+            timer.OnStop += () => player.transform.position = data.targetPosition;
         }
         
         public override void OnEnter() => timer.Start();

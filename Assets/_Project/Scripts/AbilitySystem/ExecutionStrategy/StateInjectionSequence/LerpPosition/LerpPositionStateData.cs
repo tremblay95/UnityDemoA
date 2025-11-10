@@ -6,7 +6,9 @@ namespace UnityDemoA
     [Serializable]
     public class LerpPositionStateData : AbilityStateData
     {
-        public Vector3 startPosition;
+        public LerpPositionRelativeTo initialPositionRelativeTo;
+        public Vector3 initialPosition;
+        public LerpPositionRelativeTo targetPositionRelativeTo;
         public Vector3 targetPosition;
         public float duration;
         
