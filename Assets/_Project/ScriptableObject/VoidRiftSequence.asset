@@ -12,7 +12,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06291c3cae7247e0bfbf5e41d58b028e, type: 3}
   m_Name: VoidRiftSequence
   m_EditorClassIdentifier: Assembly-CSharp::UnityDemoA.StateInjectionSequenceExecutionStrategy
-  stateSequence: []
+  stateSequence:
+  - rid: 2643559335077085282
+  - rid: 2643559335077085281
+  - rid: 2643559335077085283
+  - rid: 2643559335077085284
+  - rid: 2643559335077085285
+  - rid: 2643559335077085286
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 2643559335077085281
+      type: {class: DelayStateData, ns: UnityDemoA, asm: Assembly-CSharp}
+      data:
+        name: Raised
+        duration: 0
+    - rid: 2643559335077085282
+      type: {class: LerpPositionStateData, ns: UnityDemoA, asm: Assembly-CSharp}
+      data:
+        name: Initial Lift
+        startPosition: {x: 0, y: 0, z: 0}
+        targetPosition: {x: 0, y: 0, z: 0}
+        duration: 0
+    - rid: 2643559335077085283
+      type: {class: LerpPositionStateData, ns: UnityDemoA, asm: Assembly-CSharp}
+      data:
+        name: Void Drag
+        startPosition: {x: 0, y: 0, z: 0}
+        targetPosition: {x: 0, y: 0, z: 0}
+        duration: 0
+    - rid: 2643559335077085284
+      type: {class: LerpPositionStateData, ns: UnityDemoA, asm: Assembly-CSharp}
+      data:
+        name: Emerge
+        startPosition: {x: 0, y: 0, z: 0}
+        targetPosition: {x: 0, y: 0, z: 0}
+        duration: 0
+    - rid: 2643559335077085285
+      type: {class: DelayStateData, ns: UnityDemoA, asm: Assembly-CSharp}
+      data:
+        name: Vulnerable
+        duration: 0
+    - rid: 2643559335077085286
+      type: {class: ApplyEffectStateData, ns: UnityDemoA, asm: Assembly-CSharp}
+      data:
+        name: Apply Effect
