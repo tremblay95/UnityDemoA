@@ -3,7 +3,7 @@ using Utilities;
 
 namespace UnityDemoA
 {
-    public class DelayState : AbilityExecutionState
+    public class DelayState : AbilityState
     {
         // Todo: consider using a coroutine instead of a timer
         private CountdownTimer timer;

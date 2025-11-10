@@ -3,7 +3,7 @@ using Utilities;
 
 namespace UnityDemoA
 {
-    public class LerpPositionState : AbilityExecutionState
+    public class LerpPositionState : AbilityState
     {
         private CountdownTimer timer;
         private readonly Vector3 initialPosition;
