@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using Utilities;
+﻿using ImprovedTimers;
+using UnityEngine;
 
 namespace UnityDemoA
 {
@@ -14,7 +14,8 @@ namespace UnityDemoA
         }
         
         public override void OnEnter() => timer.Start();
-        public override void OnUpdate() => timer.Tick(Time.deltaTime);
         public override bool IsFinished() => timer.IsFinished;
+
+        ~DelayState() => timer.Dispose();
     }
 }

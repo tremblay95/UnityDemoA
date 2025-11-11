@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using ImprovedTimers;
 using KBCore.Refs;
 using UnityEngine;
-using Utilities;
 
 namespace UnityDemoA
 {
@@ -55,6 +55,8 @@ namespace UnityDemoA
             timers = new(1) { attackTimer };
         }
 
+        private void OnDestroy() => timers.ForEach(timer => timer.Dispose());
+
         private void SetupStateMachine()
         {
             // State Machine
@@ -96,7 +98,6 @@ namespace UnityDemoA
         {
             stateMachine.Update();
             
-            HandleTimers();
             UpdateAnimator();
         }
 
@@ -131,14 +132,6 @@ namespace UnityDemoA
                 SmoothSpeed(ZeroF);
                 
                 rb.linearVelocity = new Vector3(ZeroF, rb.linearVelocity.y, ZeroF);
-            }
-        }
-
-        private void HandleTimers()
-        {
-            foreach (var timer in timers)
-            {
-                timer.Tick(Time.deltaTime);
             }
         }
 

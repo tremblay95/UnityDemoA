@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using Utilities;
+﻿using ImprovedTimers;
+using UnityEngine;
 
 namespace UnityDemoA
 {
@@ -15,8 +15,8 @@ namespace UnityDemoA
             targetPosition = data.targetPositionRelativeTo.GetPosition(source.position, target.position, data.targetPosition);
             
             timer = new CountdownTimer(data.duration);
-            timer.OnStart += () => player.transform.position = data.initialPosition;
-            timer.OnStop += () => player.transform.position = data.targetPosition;
+            timer.OnTimerStart += () => player.transform.position = data.initialPosition;
+            timer.OnTimerStop += () => player.transform.position = data.targetPosition;
         }
         
         public override void OnEnter() => timer.Start();
@@ -24,9 +24,10 @@ namespace UnityDemoA
         public override void OnUpdate()
         {
             player.transform.position = Vector3.Lerp(initialPosition, targetPosition, timer.Progress);
-            timer.Tick(Time.deltaTime);
         }
         
         public override bool IsFinished() => timer.IsFinished;
+        
+        ~LerpPositionState() => timer.Dispose();
     }
 }
