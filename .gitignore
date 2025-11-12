@@ -13,6 +13,10 @@
 *.log
 /.idea/
 
+# A folder for me to mess around with things without worrying about accidentally commiting it.
+/Assets/_ScratchPad/
+/Assets/_ScratchPad.meta
+
 # By default unity supports Blender asset imports, *.blend1 blender files do not need to be commited to version control.
 *.blend1
 *.blend1.meta
