@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace ScratchPad.SubclassSelectorAttribute
+namespace Utilities.SubclassSelectorAttribute
 {
     [AttributeUsage(AttributeTargets.Field)]
     public class SubclassSelectorAttribute : PropertyAttribute

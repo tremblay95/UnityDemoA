@@ -6,9 +6,16 @@ namespace UnityDemoA
     [Serializable]
     public class NoCost : ICost
     {
-        public string costName = "No Cost";
-        
-        public bool CanAfford(Transform source) => true;
-        public bool PayCost(Transform source) => true;
+        public bool CanAfford()
+        {
+            Debug.Log("No cost, afforded.");
+            return true;
+        }
+
+        public bool PayCost()
+        {
+            Debug.Log("No cost, paid.");
+            return true;
+        }
     }
 }

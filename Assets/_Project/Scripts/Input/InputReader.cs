@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 using static PlayerInputActions;
 using static UnityEngine.InputSystem.InputAction;
 
@@ -11,6 +12,9 @@ namespace UnityDemoA
         public event UnityAction<Vector2> Move = delegate { };
         public event UnityAction<Vector2, bool> Look = delegate { };
         public event UnityAction Attack = delegate { };
+        
+        public event UnityAction<RaycastHit> Click = delegate { };
+        public event UnityAction SecondaryAction = delegate { };
         
         private PlayerInputActions _inputActions;
         
@@ -44,8 +48,21 @@ namespace UnityDemoA
         {
             if (context.started)
             {
-                Attack.Invoke();
+                // Attack.Invoke();
+                if (IsDeviceMouse(context))
+                {
+                    var ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+                    if (Physics.Raycast(ray.origin, ray.direction, out var hit, 100f))
+                    {
+                        Click.Invoke(hit);
+                    }
+                }
             }
+        }
+
+        public void OnSecondaryAction(CallbackContext context)
+        {
+            if (context.started) { SecondaryAction.Invoke(); }
         }
 
         public void OnInteract(CallbackContext context)

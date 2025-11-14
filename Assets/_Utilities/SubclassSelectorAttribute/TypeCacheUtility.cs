@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 
-namespace ScratchPad.SubclassSelectorAttribute
+namespace Utilities.SubclassSelectorAttribute
 {
     public static class TypeCacheUtility
     {

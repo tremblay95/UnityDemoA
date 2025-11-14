@@ -1,9 +1,10 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace UnityDemoA
 {
     public interface IAbilityExecutionStrategy
     {
-        void Execute(AbilityEffect effect, Transform source, Transform target);
+        void Execute(List<IGameplayEffect> effects, Transform source, IReadOnlyList<Transform> targets);
     }
 }
