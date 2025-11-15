@@ -10,26 +10,26 @@ namespace UnityDemoA
     public class Ability : ScriptableObject
     {
         [Header("Settings")] 
-        [SerializeField] private string abilityName = "New Ability";
-        [SerializeField] private float cooldownTime = 0f;
+        [SerializeField] private string _abilityName = "New Ability";
+        [SerializeField] private float _cooldownTime = 0f;
 
         [SerializeReference, SubclassSelector(typeof(TargetingStrategy))]
-        private TargetingStrategy targetingStrategy;
+        private TargetingStrategy _targetingStrategy;
 
         [SerializeReference, SubclassSelector(typeof(ICost))]
-        private ICost castingCost;
+        private ICost _castingCost;
 
         [SerializeReference, SubclassSelector(typeof(IGameplayEffect))] 
-        private List<IGameplayEffect> gameplayEffects;
+        private List<IGameplayEffect> _gameplayEffects;
         
         [SerializeReference, SubclassSelector(typeof(IAbilityExecutionStrategy))]
-        private IAbilityExecutionStrategy executionStrategy;
+        private IAbilityExecutionStrategy _executionStrategy;
 
         public IEnumerator Cast(TargetingManager targetingManager, Action OnFinish = null)
         {
-            if (castingCost.CanAfford())
+            if (_castingCost.CanAfford())
             {
-                targetingStrategy.BeginTargeting(targetingManager);
+                _targetingStrategy.BeginTargeting(targetingManager);
             }
             
             yield return new WaitUntil(() => targetingManager.Completed || targetingManager.Cancelled);
@@ -40,9 +40,9 @@ namespace UnityDemoA
                 yield break;
             }
 
-            if (castingCost.PayCost())
+            if (_castingCost.PayCost())
             {
-                executionStrategy.Execute(gameplayEffects, targetingManager.transform, targetingManager.Targets);
+                _executionStrategy.Execute(_gameplayEffects, targetingManager.transform, targetingManager.Targets);
             }
             
             OnFinish?.Invoke();

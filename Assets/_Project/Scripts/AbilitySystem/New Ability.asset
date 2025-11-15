@@ -12,16 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25daf93cb4fd29a47b8dfde551cf3fce, type: 3}
   m_Name: New Ability
   m_EditorClassIdentifier: Assembly-CSharp::UnityDemoA.Ability
-  abilityName: New Ability
-  cooldownTime: 0
-  targetingStrategy:
+  _abilityName: New Ability
+  _cooldownTime: 0
+  _targetingStrategy:
     rid: 6864085397805728040
-  castingCost:
+  _castingCost:
     rid: 6864085397805728035
-  gameplayEffects:
+  _gameplayEffects:
   - rid: 6864085397805728039
   - rid: 6864085397805728038
-  executionStrategy:
+  _executionStrategy:
     rid: 6864085397805728036
   references:
     version: 2
