@@ -1012,7 +1012,16 @@ PrefabInstance:
       addedObject: {fileID: 646267675842535302}
     - targetCorrespondingSourceObject: {fileID: 804713380459011440, guid: 33745202ebeeb0741b26854e224cdfad, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 646267675842535301}
+      addedObject: {fileID: 646267675842535303}
+    - targetCorrespondingSourceObject: {fileID: 804713380459011440, guid: 33745202ebeeb0741b26854e224cdfad, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 646267675842535304}
+    - targetCorrespondingSourceObject: {fileID: 804713380459011440, guid: 33745202ebeeb0741b26854e224cdfad, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 646267675842535305}
+    - targetCorrespondingSourceObject: {fileID: 804713380459011440, guid: 33745202ebeeb0741b26854e224cdfad, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 646267675842535312}
   m_SourcePrefab: {fileID: 100100000, guid: 33745202ebeeb0741b26854e224cdfad, type: 3}
 --- !u!1 &646267675842535299 stripped
 GameObject:
@@ -1024,21 +1033,6 @@ Camera:
   m_CorrespondingSourceObject: {fileID: 4064474109901142315, guid: 33745202ebeeb0741b26854e224cdfad, type: 3}
   m_PrefabInstance: {fileID: 646267675842535298}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &646267675842535301
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 646267675842535299}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d03b258050084aaf90d3e94a93232351, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::UnityDemoA.DevCaster
-  targetingManager: {fileID: 646267675842535302}
-  input: {fileID: 11400000, guid: 259252361022187479f6738c68e1d739, type: 2}
-  abilityDefinition: {fileID: 11400000, guid: 9ea48ac156b406542a755a0a7c070398, type: 2}
 --- !u!114 &646267675842535302
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1053,6 +1047,63 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UnityDemoA.TargetingManager
   _input: {fileID: 11400000, guid: 259252361022187479f6738c68e1d739, type: 2}
   _camera: {fileID: 646267675842535300}
+--- !u!114 &646267675842535303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 646267675842535299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15686f6130044a709f2cf4210a8223dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UnityDemoA.EffectHandlerManager
+--- !u!114 &646267675842535304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 646267675842535299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d03b258050084aaf90d3e94a93232351, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UnityDemoA.DevCaster
+  targetingManager: {fileID: 646267675842535302}
+  input: {fileID: 11400000, guid: 259252361022187479f6738c68e1d739, type: 2}
+  abilityDefinition: {fileID: 11400000, guid: 9ea48ac156b406542a755a0a7c070398, type: 2}
+--- !u!114 &646267675842535305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 646267675842535299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f2711d5adbb4724baef124520bdd7f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UnityDemoA.DamageEffectHandler
+--- !u!54 &646267675842535309 stripped
+Rigidbody:
+  m_CorrespondingSourceObject: {fileID: 8402978047626666410, guid: 33745202ebeeb0741b26854e224cdfad, type: 3}
+  m_PrefabInstance: {fileID: 646267675842535298}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &646267675842535312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 646267675842535299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8756edd633e40008ed4685fe8bb564f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UnityDemoA.KnockbackEffectHandler
+  _rigidbody: {fileID: 646267675842535309}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

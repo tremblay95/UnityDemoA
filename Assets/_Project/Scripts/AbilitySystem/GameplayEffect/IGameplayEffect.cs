@@ -1,9 +1,4 @@
-﻿using UnityEngine;
-
-namespace UnityDemoA
+﻿namespace UnityDemoA
 {
-    public interface IGameplayEffect
-    {
-        public void Apply(Transform source, Transform target);
-    }
+    public interface IGameplayEffect { }
 }

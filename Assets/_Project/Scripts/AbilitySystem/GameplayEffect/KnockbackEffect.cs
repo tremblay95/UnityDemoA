@@ -6,18 +6,11 @@ namespace UnityDemoA
     [Serializable]
     public class KnockbackEffect : IGameplayEffect
     {
-        [SerializeField] private float _knockbackForce = 10f;
-        [SerializeField] private float _knockbackLift = 1f;
+        [SerializeField, Range(0f, 50f)] private float _knockbackForce = 10f;
+        [SerializeField, Range(0f, 20f)] private float _knockbackLift = 1f;
         [SerializeField] private ForceMode _forceMode = ForceMode.VelocityChange;
         
-        public void Apply(Transform source, Transform target)
-        {
-            var rb = target.GetComponent<Rigidbody>();
-            if (rb == null) { return; }
-            
-            Vector3 knockbackDirection = target == source ? -target.forward : target.position - source.position;
-            
-            rb.AddForce(knockbackDirection * _knockbackForce + Vector3.up * _knockbackLift, _forceMode);
-        }
+        public Vector3 Knockback => new(0f, _knockbackLift, _knockbackForce);
+        public ForceMode ForceMode => _forceMode;
     }
 }

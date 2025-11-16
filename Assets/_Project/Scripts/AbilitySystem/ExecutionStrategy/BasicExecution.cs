@@ -9,11 +9,12 @@ namespace UnityDemoA
     {
         public void Execute(List<IGameplayEffect> effects, Transform source, IReadOnlyList<Transform> targets)
         {
-            foreach (var effect in effects)
+            foreach (var target in targets)
             {
-                foreach (var target in targets)
+                var handlerManager = target.GetComponent<EffectHandlerManager>();
+                if (handlerManager != null)
                 {
-                    effect.Apply(source, target);
+                    handlerManager.ApplyEffects(effects, source);
                 }
             }
         }
