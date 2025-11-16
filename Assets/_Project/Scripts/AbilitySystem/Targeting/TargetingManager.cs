@@ -37,7 +37,6 @@ namespace UnityDemoA
 
         public void CompleteTargeting(List<Transform> targets)
         {
-            Debug.Log($"Targeting Complete. Targets found: {targets.Count}");
             Cancelled = false;
             Completed = true;
             _targets = targets;
@@ -47,7 +46,6 @@ namespace UnityDemoA
 
         public void CancelTargeting()
         {
-            Debug.Log("Targeting Cancelled");
             Completed = false;
             Cancelled = true;
             ClearTargets();

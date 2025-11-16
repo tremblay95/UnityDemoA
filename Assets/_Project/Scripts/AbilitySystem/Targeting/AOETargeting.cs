@@ -19,8 +19,6 @@ namespace UnityDemoA
 
         protected override void Start()
         {
-            Debug.Log("AOE Targeting Started");
-            
             _isTargeting = true;
             
             _targetingManager.SetCurrentStrategy(this);

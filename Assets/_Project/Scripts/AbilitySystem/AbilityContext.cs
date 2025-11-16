@@ -16,7 +16,6 @@ namespace UnityDemoA
         {
             _abilityDefinition = abilityDefinition;
             _cooldownTimer = new CountdownTimer(abilityDefinition.cooldownTime);
-            _cooldownTimer.OnTimerStart += () => Debug.Log("Timer started!");
             _cooldownTimer.OnTimerStop += ClearCoroutine;
         }
 

@@ -17,7 +17,6 @@ namespace UnityDemoA
             
             Vector3 knockbackDirection = target == source ? -target.forward : target.position - source.position;
             
-            Debug.Log($"{_knockbackForce} knockback applied to {target.name}");
             rb.AddForce(knockbackDirection * _knockbackForce + Vector3.up * _knockbackLift, _forceMode);
         }
     }
