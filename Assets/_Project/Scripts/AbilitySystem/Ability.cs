@@ -1,8 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Utilities.SubclassSelectorAttribute;
 using UnityEngine;
+using Utilities.SubclassSelectorAttribute;
 
 namespace UnityDemoA
 {
@@ -10,42 +10,48 @@ namespace UnityDemoA
     public class Ability : ScriptableObject
     {
         [Header("Settings")] 
-        [SerializeField] private string _abilityName = "New Ability";
-        [SerializeField] private float _cooldownTime = 0f;
+        public string abilityName = "New Ability";
+        public float cooldownTime = 0f;
 
         [SerializeReference, SubclassSelector(typeof(TargetingStrategy))]
-        private TargetingStrategy _targetingStrategy;
+        public TargetingStrategy targetingStrategy;
 
         [SerializeReference, SubclassSelector(typeof(ICost))]
-        private ICost _castingCost;
+        public ICost castingCost;
 
-        [SerializeReference, SubclassSelector(typeof(IGameplayEffect))] 
-        private List<IGameplayEffect> _gameplayEffects;
-        
+        [SerializeReference, SubclassSelector(typeof(IGameplayEffect))]
+        public List<IGameplayEffect> gameplayEffects;
+
         [SerializeReference, SubclassSelector(typeof(IAbilityExecutionStrategy))]
-        private IAbilityExecutionStrategy _executionStrategy;
+        public IAbilityExecutionStrategy executionStrategy;
 
-        public IEnumerator Cast(TargetingManager targetingManager, Action OnFinish = null)
+        public static IEnumerator Cast(Ability abilityDefinition, TargetingManager targetingManager, Action completedCallback = null, Action cancelledCallback = null)
         {
-            if (_castingCost.CanAfford())
+            if (!abilityDefinition.castingCost.CanAfford())
             {
-                _targetingStrategy.BeginTargeting(targetingManager);
+                if (cancelledCallback != null) { cancelledCallback(); }
+                yield break;
             }
             
+            abilityDefinition.targetingStrategy.BeginTargeting(targetingManager);
+
             yield return new WaitUntil(() => targetingManager.Completed || targetingManager.Cancelled);
 
             if (targetingManager.Cancelled)
             {
-                OnFinish?.Invoke();
+                if (cancelledCallback != null) { cancelledCallback(); }
                 yield break;
             }
 
-            if (_castingCost.PayCost())
+            if (!abilityDefinition.castingCost.PayCost())
             {
-                _executionStrategy.Execute(_gameplayEffects, targetingManager.transform, targetingManager.Targets);
+                if (cancelledCallback != null) { cancelledCallback(); }
+                yield break;
             }
             
-            OnFinish?.Invoke();
+            abilityDefinition.executionStrategy.Execute(abilityDefinition.gameplayEffects, targetingManager.transform, targetingManager.Targets);
+
+            if (completedCallback != null) { completedCallback(); }
         }
     }
 }
