@@ -7,9 +7,8 @@ using Utilities.SubclassSelectorAttribute;
 namespace UnityDemoA
 {
     [CreateAssetMenu(fileName = "New Ability", menuName = "Abilities/Ability")]
-    public class Ability : ScriptableObject
+    public class AbilityDefinition : ScriptableObject
     {
-        [Header("Settings")] 
         public string abilityName = "New Ability";
         public float cooldownTime = 0f;
 
@@ -25,7 +24,7 @@ namespace UnityDemoA
         [SerializeReference, SubclassSelector(typeof(IAbilityExecutionStrategy))]
         public IAbilityExecutionStrategy executionStrategy;
 
-        public static IEnumerator Cast(Ability abilityDefinition, TargetingManager targetingManager, Action completedCallback = null, Action cancelledCallback = null)
+        public static IEnumerator Cast(AbilityDefinition abilityDefinition, TargetingManager targetingManager, Action completedCallback = null, Action cancelledCallback = null)
         {
             if (!abilityDefinition.castingCost.CanAfford())
             {

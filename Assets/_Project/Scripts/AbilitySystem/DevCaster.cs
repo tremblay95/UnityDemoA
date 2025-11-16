@@ -1,6 +1,4 @@
-﻿using System;
-using ImprovedTimers;
-using KBCore.Refs;
+﻿using KBCore.Refs;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,28 +8,21 @@ namespace UnityDemoA
     public class DevCaster : ValidatedMonoBehaviour, IEffectHandler
     {
         [SerializeField, Self] private TargetingManager targetingManager;
-        [SerializeField] private Ability ability;
         [SerializeField] private InputReader input;
-        private CountdownTimer _cooldownTimer;
-        private Coroutine _abilityCoroutine;
+        
+        [SerializeField] private AbilityDefinition abilityDefinition;
+        private AbilityContext _abilityContext;
 
         private void OnEnable() => input.EnableInputActions();
         private void OnDisable() => input.DisableInputActions();
 
-        private void Awake()
-        {
-            _cooldownTimer = new CountdownTimer(ability.cooldownTime);
-            _cooldownTimer.OnTimerStop += () => _abilityCoroutine = null;
-        }
-
         private void Update()
         {
-            if (Keyboard.current.digit1Key.wasPressedThisFrame && _abilityCoroutine == null)
+            if (Keyboard.current.digit1Key.wasPressedThisFrame && (!_abilityContext?.IsCasting ?? true))
             {
-                var abilityCast = Ability.Cast(ability, targetingManager,
-                    () => { _cooldownTimer.Start(); }, () => { _abilityCoroutine = null; });
+                if (_abilityContext == null) { _abilityContext = new AbilityContext(abilityDefinition); }
 
-                _abilityCoroutine = StartCoroutine(abilityCast);
+                _abilityContext.CastAbility(targetingManager);
             }
         }
 
@@ -41,6 +32,7 @@ namespace UnityDemoA
         }
     }
     
+    // Todo: properly design this and probably make it an abstract class named AbilitySystemComponent or something
     public interface IEffectHandler
     {
         void TakeDamage(int amount);

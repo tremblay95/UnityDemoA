@@ -1037,8 +1037,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnityDemoA.DevCaster
   targetingManager: {fileID: 646267675842535302}
-  ability: {fileID: 11400000, guid: 9ea48ac156b406542a755a0a7c070398, type: 2}
   input: {fileID: 11400000, guid: 259252361022187479f6738c68e1d739, type: 2}
+  abilityDefinition: {fileID: 11400000, guid: 9ea48ac156b406542a755a0a7c070398, type: 2}
 --- !u!114 &646267675842535302
 MonoBehaviour:
   m_ObjectHideFlags: 0
