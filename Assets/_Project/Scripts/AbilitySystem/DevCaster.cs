@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 namespace UnityDemoA
 {
     [RequireComponent(typeof(TargetingManager))]
-    public class DevCaster : ValidatedMonoBehaviour, IEffectHandler
+    public class DevCaster : ValidatedMonoBehaviour, IEffectHandler<DamageEffect>
     {
         [SerializeField, Self] private TargetingManager targetingManager;
         [SerializeField] private InputReader input;
@@ -26,9 +26,9 @@ namespace UnityDemoA
             }
         }
 
-        public void HandleEffect(int effect)
+        public void HandleEffect(DamageEffect effect)
         {
-            Debug.Log($"{gameObject.name} took {effect} damage!");
+            Debug.Log($"{gameObject.name} took {effect.damage} damage via the DamageEffect handler!");
         }
     }
 }

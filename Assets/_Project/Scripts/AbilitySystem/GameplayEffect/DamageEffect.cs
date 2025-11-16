@@ -6,14 +6,14 @@ namespace UnityDemoA
     [Serializable]
     public class DamageEffect : IGameplayEffect
     {
-        [SerializeField] private int _damage = 10;
+        public int damage = 10;
         
         public void Apply(Transform source, Transform target)
         {
-            var handler = target.GetComponent<IEffectHandler>();
+            var handler = target.GetComponent<IEffectHandler<DamageEffect>>();
             if (handler == null) { return; }
             
-            handler.HandleEffect(_damage);
+            handler.HandleEffect(this);
         }
     }
 }

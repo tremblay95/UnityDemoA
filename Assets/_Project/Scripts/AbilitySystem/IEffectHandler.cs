@@ -1,12 +1,7 @@
 namespace UnityDemoA
 {
-    public interface IEffectHandler<T>
+    public interface IEffectHandler<T> where T : IGameplayEffect
     {
         void HandleEffect(T effect);
-    }
-    
-    public interface IEffectHandler : IEffectHandler<int>
-    {
-        // void HandleEffect(int effect);
     }
 }
