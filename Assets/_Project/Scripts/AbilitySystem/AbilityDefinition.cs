@@ -28,7 +28,7 @@ namespace UnityDemoA
         {
             if (!abilityDefinition.castingCost.CanAfford())
             {
-                if (cancelledCallback != null) { cancelledCallback(); }
+                cancelledCallback?.Invoke();
                 yield break;
             }
             
@@ -36,21 +36,15 @@ namespace UnityDemoA
 
             yield return new WaitUntil(() => targetingManager.Completed || targetingManager.Cancelled);
 
-            if (targetingManager.Cancelled)
+            if (targetingManager.Cancelled || !abilityDefinition.castingCost.PayCost())
             {
-                if (cancelledCallback != null) { cancelledCallback(); }
+                cancelledCallback?.Invoke();
                 yield break;
             }
 
-            if (!abilityDefinition.castingCost.PayCost())
-            {
-                if (cancelledCallback != null) { cancelledCallback(); }
-                yield break;
-            }
-            
             abilityDefinition.executionStrategy.Execute(abilityDefinition.gameplayEffects, targetingManager.transform, targetingManager.Targets);
 
-            if (completedCallback != null) { completedCallback(); }
+            completedCallback?.Invoke();
         }
     }
 }
