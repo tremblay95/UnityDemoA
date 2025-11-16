@@ -26,15 +26,9 @@ namespace UnityDemoA
             }
         }
 
-        public void TakeDamage(int amount)
+        public void HandleEffect(int effect)
         {
-            Debug.Log($"{gameObject.name} took {amount} damage!");
+            Debug.Log($"{gameObject.name} took {effect} damage!");
         }
-    }
-    
-    // Todo: properly design this and probably make it an abstract class named AbilitySystemComponent or something
-    public interface IEffectHandler
-    {
-        void TakeDamage(int amount);
     }
 }

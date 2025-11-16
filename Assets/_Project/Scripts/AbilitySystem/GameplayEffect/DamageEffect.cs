@@ -13,7 +13,7 @@ namespace UnityDemoA
             var handler = target.GetComponent<IEffectHandler>();
             if (handler == null) { return; }
             
-            handler.TakeDamage(_damage);
+            handler.HandleEffect(_damage);
         }
     }
 }
