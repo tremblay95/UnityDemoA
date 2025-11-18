@@ -1,21 +1,27 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using KBCore.Refs;
 using UnityEngine;
 
 namespace UnityDemoA
 {
-    public class EffectHandlerManager : MonoBehaviour
+    [RequireComponent(typeof(Rigidbody))]
+    public class EffectHandlerManager : ValidatedMonoBehaviour
     {
+        [SerializeField, Self] private new Rigidbody rigidbody;
         private readonly Dictionary<Type, IEffectHandler> _effectHandlers = new();
 
-        private void Awake() => RegisterEffectHandlers();
+        // Todo: List of Effect Handler Factory
+        private List<IEffectHandler> _effectHandlerList;
 
-        private void RegisterEffectHandlers()
+        private void Awake()
         {
-            var handlers = GetComponents<MonoBehaviour>()
-                .Where(mb => mb is IEffectHandler).Cast<IEffectHandler>();
+            _effectHandlerList = new(2){ new DamageEffectHandler(transform), new KnockbackEffectHandler(rigidbody) };
+            RegisterEffectHandlers(_effectHandlerList);
+        }
 
+        private void RegisterEffectHandlers(IEnumerable<IEffectHandler> handlers)
+        {
             foreach (var handler in handlers)
             {
                 var effectType = handler.EffectType;

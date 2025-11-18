@@ -3,8 +3,7 @@ using UnityEngine;
 
 namespace UnityDemoA
 {
-    // Todo: refactor effect handlers to be serializable non-monobehaviours that can be assigned via a List on EffectHandlerManager
-    public abstract class EffectHandler<T> : MonoBehaviour, IEffectHandler where T : IGameplayEffect
+    public abstract class EffectHandler<T> : IEffectHandler where T : IGameplayEffect
     {
         public abstract Type EffectType { get; }
 
@@ -12,7 +11,8 @@ namespace UnityDemoA
         {
             HandleEffect((T) effect, source);
         }
-        public abstract void HandleEffect(T effect, Transform source);
+
+        protected abstract void HandleEffect(T effect, Transform source);
     }
 
     public interface IEffectHandler
