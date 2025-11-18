@@ -1,17 +1,14 @@
-using System;
 using UnityEngine;
 using UnityUtils;
 
 namespace UnityDemoA
 {
-    public class KnockbackEffectHandler : EffectHandler<KnockbackEffect>
+    public class KnockbackHandler : EffectHandler<KnockbackEffect>
     {
         private readonly Rigidbody _rigidbody;
         private readonly Transform _transform;
         
-        public override Type EffectType =>  typeof(KnockbackEffect);
-
-        public KnockbackEffectHandler(Rigidbody rigidbody)
+        public KnockbackHandler(Rigidbody rigidbody)
         {
             _rigidbody = rigidbody;
             _transform = rigidbody.transform;

@@ -5,7 +5,7 @@ namespace UnityDemoA
 {
     public abstract class EffectHandler<T> : IEffectHandler where T : IGameplayEffect
     {
-        public abstract Type EffectType { get; }
+        public Type EffectType => typeof(T);
 
         public void HandleEffect(IGameplayEffect effect, Transform source)
         {

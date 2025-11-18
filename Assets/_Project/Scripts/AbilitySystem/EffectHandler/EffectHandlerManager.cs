@@ -16,7 +16,7 @@ namespace UnityDemoA
 
         private void Awake()
         {
-            _effectHandlerList = new(2){ new DamageEffectHandler(transform), new KnockbackEffectHandler(rigidbody) };
+            _effectHandlerList = new(2){ new DebugDamageHandler(name), new DebugKnockbackHandler(name) };
             RegisterEffectHandlers(_effectHandlerList);
         }
 
