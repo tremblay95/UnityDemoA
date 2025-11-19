@@ -21,7 +21,7 @@ namespace UnityDemoA
         {
             if (Keyboard.current.digit1Key.wasPressedThisFrame && (!_abilityContext?.IsCasting ?? true))
             {
-                _abilityContext ??= new AbilityContext(abilityDefinition);
+                _abilityContext ??= new SingleAbilityContext(abilityDefinition);
 
                 _abilityContext.CastAbility(targetingManager);
             }
