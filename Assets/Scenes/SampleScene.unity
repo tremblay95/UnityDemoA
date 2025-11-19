@@ -368,6 +368,7 @@ GameObject:
   - component: {fileID: 606829045}
   - component: {fileID: 606829046}
   - component: {fileID: 606829044}
+  - component: {fileID: 606829047}
   m_Layer: 0
   m_Name: Projectile
   m_TagString: Untagged
@@ -405,7 +406,7 @@ Transform:
   m_GameObject: {fileID: 606829042}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.098, y: 1.32561, z: 0.20377}
+  m_LocalPosition: {x: -0.017, y: 0.829, z: 0.624}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -434,11 +435,36 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 0
+  m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &606829047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 606829042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15686f6130044a709f2cf4210a8223dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UnityDemoA.EffectHandlerManager
+  rigidbody: {fileID: 606829046}
+  _effectHandlerList:
+  - rid: 6864085511065829442
+  - rid: 6864085511065829447
+  references:
+    version: 2
+    RefIds:
+    - rid: 6864085511065829442
+      type: {class: DebugDamageHandler, ns: UnityDemoA, asm: Assembly-CSharp}
+      data: 
+    - rid: 6864085511065829447
+      type: {class: KnockbackHandler, ns: UnityDemoA, asm: Assembly-CSharp}
+      data: 
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0

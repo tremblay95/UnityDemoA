@@ -53,15 +53,12 @@ namespace UnityDemoA
 
         private void OnClick(RaycastHit hit)
         {
-            if (_isTargeting)
-            {
-                var targets = Physics.OverlapSphere(hit.point, _aoeRadius)
-                    .Select(c => c.transform).ToList();
-                
-                _targetingManager.CompleteTargeting(targets);
-                
-                Cancel();
-            }
+            if (!_isTargeting) { return; }
+
+            var targets = Physics.OverlapSphere(hit.point, _aoeRadius).Select(c => c.transform).ToList();
+
+            _targetingManager.CompleteTargeting(targets);
+            Cancel();
         }
         
         public override void Cancel()

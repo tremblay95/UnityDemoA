@@ -20,7 +20,7 @@ namespace UnityDemoA
         {
             var knockbackDirection = source == _transform
                 ? -_transform.forward
-                : (source.position - _transform.position).With(y:0).normalized;
+                : (_transform.position - source.position).With(y:0).normalized;
             
             var rotation = Quaternion.FromToRotation(Vector3.forward, knockbackDirection);
             

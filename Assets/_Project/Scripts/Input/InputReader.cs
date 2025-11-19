@@ -48,7 +48,7 @@ namespace UnityDemoA
         {
             if (context.started)
             {
-                // Attack.Invoke();
+                Attack.Invoke();
                 if (IsDeviceMouse(context))
                 {
                     var ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
