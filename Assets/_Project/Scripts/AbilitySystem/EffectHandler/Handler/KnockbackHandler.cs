@@ -22,7 +22,7 @@ namespace UnityDemoA
                 ? -_transform.forward
                 : (_transform.position - source.position).With(y:0).normalized;
             
-            var rotation = Quaternion.FromToRotation(Vector3.forward, knockbackDirection);
+            var rotation = Quaternion.LookRotation(knockbackDirection);
             
             _rigidbody.AddForce(rotation * effect.Knockback,  effect.ForceMode);
         }
