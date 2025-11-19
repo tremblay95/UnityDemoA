@@ -1054,6 +1054,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnityDemoA.EffectHandlerManager
   rigidbody: {fileID: 646267675842535309}
+  _effectHandlerList:
+  - rid: 2643559534677196870
+  - rid: 2643559539118702657
+  references:
+    version: 2
+    RefIds:
+    - rid: 2643559534677196870
+      type: {class: DebugDamageHandler, ns: UnityDemoA, asm: Assembly-CSharp}
+      data: 
+    - rid: 2643559539118702657
+      type: {class: KnockbackHandler, ns: UnityDemoA, asm: Assembly-CSharp}
+      data: 
 --- !u!114 &646267675842535304
 MonoBehaviour:
   m_ObjectHideFlags: 0

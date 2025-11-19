@@ -1,17 +1,19 @@
+using System;
 using UnityEngine;
 using UnityUtils;
 
 namespace UnityDemoA
 {
+    [Serializable]
     public class KnockbackHandler : EffectHandler<KnockbackEffect>
     {
-        private readonly Rigidbody _rigidbody;
-        private readonly Transform _transform;
-        
-        public KnockbackHandler(Rigidbody rigidbody)
+        private Rigidbody _rigidbody;
+        private Transform _transform;
+
+        public override void InitializeReferences(GameObject go)
         {
-            _rigidbody = rigidbody;
-            _transform = rigidbody.transform;
+            _transform = go.transform;
+            _rigidbody = go.GetComponent<Rigidbody>();
         }
 
         protected override void HandleEffect(KnockbackEffect effect, Transform source)

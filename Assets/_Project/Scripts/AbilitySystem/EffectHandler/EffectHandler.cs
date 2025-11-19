@@ -7,17 +7,17 @@ namespace UnityDemoA
     {
         public Type EffectType => typeof(T);
 
-        public void HandleEffect(IGameplayEffect effect, Transform source)
-        {
-            HandleEffect((T) effect, source);
-        }
+        public virtual void InitializeReferences(GameObject go) { }
+
+        public void HandleEffect(IGameplayEffect effect, Transform source) => HandleEffect((T) effect, source);
 
         protected abstract void HandleEffect(T effect, Transform source);
     }
 
     public interface IEffectHandler
     {
-        Type EffectType { get; }
-        void HandleEffect(IGameplayEffect effect, Transform source);
+        public Type EffectType { get; }
+        public void InitializeReferences(GameObject go);
+        public void HandleEffect(IGameplayEffect effect, Transform source);
     }
 }
