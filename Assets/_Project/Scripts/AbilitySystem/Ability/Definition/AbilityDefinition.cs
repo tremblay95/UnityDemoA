@@ -42,6 +42,7 @@ namespace UnityDemoA
                 yield break;
             }
 
+            // Todo: yield until execution strategy is complete
             abilityDefinition.executionStrategy.Execute(abilityDefinition.gameplayEffects, targetingManager.transform, targetingManager.Targets);
 
             completedCallback?.Invoke();
