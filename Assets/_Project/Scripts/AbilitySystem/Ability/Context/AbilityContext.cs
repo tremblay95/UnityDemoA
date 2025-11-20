@@ -14,12 +14,16 @@ namespace UnityDemoA
         
         protected void PerformCast(TargetingManager targetingManager)
         {
-            _castCoroutine = targetingManager.StartCoroutine(GetAbilityDefinition().Cast(targetingManager, 
-                OnAbilityCastComplete, OnAbilityCastCancelled));
+            var abilityDefinition = GetAbilityDefinition();
+            if (abilityDefinition == null) { return; }
+
+            _castCoroutine = targetingManager.StartCoroutine(abilityDefinition.Cast(targetingManager,
+                OnCastComplete, OnCastCancelled));
         }
         
-        protected virtual void OnAbilityCastComplete() { }
+        protected virtual void OnCastComplete() { }
         
-        protected virtual void OnAbilityCastCancelled() => _castCoroutine = null;
+        protected virtual void OnCastCancelled() => ClearCoroutine();
+        protected void ClearCoroutine() => _castCoroutine = null;
     }
 }

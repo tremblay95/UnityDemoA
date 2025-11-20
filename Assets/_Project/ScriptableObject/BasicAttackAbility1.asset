@@ -20,6 +20,7 @@ MonoBehaviour:
     rid: 6864085511065829451
   gameplayEffects:
   - rid: 6864085511065829456
+  - rid: 6864085534638604353
   executionStrategy:
     rid: 6864085511065829452
   references:
@@ -40,3 +41,7 @@ MonoBehaviour:
         _knockbackForce: 0
         _knockbackLift: 2
         _forceMode: 2
+    - rid: 6864085534638604353
+      type: {class: DamageEffect, ns: UnityDemoA, asm: Assembly-CSharp}
+      data:
+        _damage: 3

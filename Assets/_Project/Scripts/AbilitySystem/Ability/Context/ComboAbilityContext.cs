@@ -10,20 +10,34 @@ namespace UnityDemoA
         private readonly ComboDefinition _comboDefinition;
         private readonly CountdownTimer _resetTimer;
         private readonly CountdownTimer _cooldownTimer;
-        
-        private Queue<AbilityDefinition>  _comboQueue = new();
+
+        private readonly Queue<AbilityDefinition>  _comboQueue = new();
         private int _comboCount = 0;
 
         public ComboAbilityContext(ComboDefinition comboDefinition)
         {
             _comboDefinition = comboDefinition;
+
             _resetTimer = new CountdownTimer(comboDefinition.resetTime);
+            _resetTimer.OnTimerStop += ResetCombo;
+
             _cooldownTimer = new CountdownTimer(comboDefinition.cooldownTime);
+            _cooldownTimer.OnTimerStop += ResetCombo;
         }
-        
+
+        protected override AbilityDefinition GetAbilityDefinition() =>
+            _comboQueue.TryPeek(out var abilityDefinition) ? abilityDefinition : null;
+
         public override void CastAbility(TargetingManager targetingManager)
         {
-            
+            if (_comboCount >= _comboDefinition.comboAbilityList.Count || _cooldownTimer.IsRunning) { return; }
+
+            _comboQueue.Enqueue(_comboDefinition.comboAbilityList[_comboCount]);
+            _comboCount++;
+
+            if (_resetTimer.IsRunning) { CancelResetTimer(); }
+
+            if (!IsCasting) { targetingManager.StartCoroutine(Cast(targetingManager)); }
         }
 
         private IEnumerator Cast(TargetingManager targetingManager)
@@ -35,20 +49,31 @@ namespace UnityDemoA
                 _comboQueue.Dequeue();
             }
         }
-        
-        protected override AbilityDefinition GetAbilityDefinition()
+
+        protected override void OnCastComplete()
         {
-            return _comboQueue.Count > 0 ? _comboQueue.Peek() : null;
+            ClearCoroutine();
+            if (_comboCount < _comboDefinition.comboAbilityList.Count) { _resetTimer.Start(); }
+            else { _cooldownTimer.Start(); }
         }
 
-        protected override void OnAbilityCastComplete()
+        protected override void OnCastCancelled()
         {
-            _resetTimer.Start();
-            if (_comboCount >= _comboDefinition.comboAbilityList.Count)
-            {
-                _comboCount = 0;
-                _cooldownTimer.Stop();
-            }
+            base.OnCastCancelled();
+            ResetCombo();
+        }
+
+        private void ResetCombo()
+        {
+            _comboQueue.Clear();
+            _comboCount = 0;
+        }
+
+        private void CancelResetTimer()
+        {
+            _resetTimer.OnTimerStop -= ResetCombo;
+            _resetTimer.Stop();
+            _resetTimer.OnTimerStop += ResetCombo;
         }
     }
 }

@@ -11,7 +11,9 @@ namespace UnityDemoA
         [SerializeField, Self] private TargetingManager targetingManager;
         [SerializeField] private InputReader input;
         
+        // Todo: refactor ability def and combo def to have a common base class
         [SerializeField] private AbilityDefinition abilityDefinition;
+        [SerializeField] private ComboDefinition comboDefinition;
         private AbilityContext _abilityContext;
 
         private void OnEnable() => input.EnableInputActions();
@@ -21,7 +23,9 @@ namespace UnityDemoA
         {
             if (Keyboard.current.digit1Key.wasPressedThisFrame && (!_abilityContext?.IsCasting ?? true))
             {
-                _abilityContext ??= new SingleAbilityContext(abilityDefinition);
+                // Todo: decide on a way to get the correct context based on the type of ability definition
+                // _abilityContext ??= new SingleAbilityContext(abilityDefinition);
+                _abilityContext ??= new ComboAbilityContext(comboDefinition);
 
                 _abilityContext.CastAbility(targetingManager);
             }

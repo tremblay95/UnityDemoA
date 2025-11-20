@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e47b5efe71d48bca3df1a25818ec781, type: 3}
   m_Name: BasicAttackCombo
   m_EditorClassIdentifier: Assembly-CSharp::UnityDemoA.ComboDefinition
-  comboResetTime: 0.2
-  comboCooldownTime: 0.5
+  resetTime: 1
+  cooldownTime: 3
   comboAbilityList:
   - {fileID: 11400000, guid: 3878f55318c53fb45a206d3ac74c3b59, type: 2}
   - {fileID: 11400000, guid: 09078ce74834696489d22519d425def3, type: 2}

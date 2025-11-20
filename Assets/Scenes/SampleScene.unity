@@ -1107,6 +1107,7 @@ MonoBehaviour:
   targetingManager: {fileID: 646267675842535302}
   input: {fileID: 11400000, guid: 259252361022187479f6738c68e1d739, type: 2}
   abilityDefinition: {fileID: 11400000, guid: 9ea48ac156b406542a755a0a7c070398, type: 2}
+  comboDefinition: {fileID: 11400000, guid: 74a88728d16ec724baaf8570282c7606, type: 2}
 --- !u!54 &646267675842535309 stripped
 Rigidbody:
   m_CorrespondingSourceObject: {fileID: 8402978047626666410, guid: 33745202ebeeb0741b26854e224cdfad, type: 3}

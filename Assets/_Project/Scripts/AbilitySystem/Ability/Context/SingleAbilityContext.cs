@@ -12,7 +12,7 @@ namespace UnityDemoA
         {
             _abilityDefinition = abilityDefinition;
             _cooldownTimer = new CountdownTimer(abilityDefinition.cooldownTime);
-            _cooldownTimer.OnTimerStop += OnAbilityCastCancelled;
+            _cooldownTimer.OnTimerStop += ClearCoroutine;
         }
 
         public override void CastAbility(TargetingManager targetingManager)
@@ -22,7 +22,7 @@ namespace UnityDemoA
             PerformCast(targetingManager);
         }
 
-        protected override void OnAbilityCastComplete() => _cooldownTimer.Start();
+        protected override void OnCastComplete() => _cooldownTimer.Start();
         protected override AbilityDefinition GetAbilityDefinition() => _abilityDefinition;
     }
 }
