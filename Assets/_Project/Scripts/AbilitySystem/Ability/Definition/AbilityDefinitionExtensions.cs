@@ -5,10 +5,10 @@ namespace UnityDemoA
 {
     public static class AbilityDefinitionExtensions
     {
-        public static IEnumerator Cast(this AbilityDefinition abilityDefinition, TargetingManager targetingManager,
+        public static IEnumerator Cast(this SingleAbilityDefinition abilityDefinition, TargetingManager targetingManager,
             Action completedCallback = null, Action cancelledCallback = null)
         {
-            return AbilityDefinition.Cast(abilityDefinition, targetingManager, completedCallback, cancelledCallback);
+            return SingleAbilityDefinition.Cast(abilityDefinition, targetingManager, completedCallback, cancelledCallback);
         }
     }
 }

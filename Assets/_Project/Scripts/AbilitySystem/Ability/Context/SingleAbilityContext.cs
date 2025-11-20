@@ -4,11 +4,11 @@ namespace UnityDemoA
 {
     public class SingleAbilityContext : AbilityContext
     {
-        private readonly AbilityDefinition _abilityDefinition;
+        private readonly SingleAbilityDefinition _abilityDefinition;
         //this probably won't stay read only if we have some sort of stat that reduces cooldowns 
         private readonly CountdownTimer _cooldownTimer;
 
-        public SingleAbilityContext(AbilityDefinition abilityDefinition)
+        public SingleAbilityContext(SingleAbilityDefinition abilityDefinition)
         {
             _abilityDefinition = abilityDefinition;
             _cooldownTimer = new CountdownTimer(abilityDefinition.cooldownTime);
@@ -23,6 +23,6 @@ namespace UnityDemoA
         }
 
         protected override void OnCastComplete() => _cooldownTimer.Start();
-        protected override AbilityDefinition GetAbilityDefinition() => _abilityDefinition;
+        protected override SingleAbilityDefinition GetAbilityDefinition() => _abilityDefinition;
     }
 }

@@ -10,7 +10,7 @@ namespace UnityDemoA
         
         public abstract void CastAbility(TargetingManager targetingManager);
         
-        protected abstract AbilityDefinition GetAbilityDefinition();
+        protected abstract SingleAbilityDefinition GetAbilityDefinition();
         
         protected void PerformCast(TargetingManager targetingManager)
         {

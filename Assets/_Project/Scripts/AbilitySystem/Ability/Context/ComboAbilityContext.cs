@@ -7,14 +7,14 @@ namespace UnityDemoA
 {
     public class ComboAbilityContext : AbilityContext
     {
-        private readonly ComboDefinition _comboDefinition;
+        private readonly ComboAbilityDefinition _comboDefinition;
         private readonly CountdownTimer _resetTimer;
         private readonly CountdownTimer _cooldownTimer;
 
-        private readonly Queue<AbilityDefinition>  _comboQueue = new();
+        private readonly Queue<SingleAbilityDefinition>  _comboQueue = new();
         private int _comboCount = 0;
 
-        public ComboAbilityContext(ComboDefinition comboDefinition)
+        public ComboAbilityContext(ComboAbilityDefinition comboDefinition)
         {
             _comboDefinition = comboDefinition;
 
@@ -25,7 +25,7 @@ namespace UnityDemoA
             _cooldownTimer.OnTimerStop += ResetCombo;
         }
 
-        protected override AbilityDefinition GetAbilityDefinition() =>
+        protected override SingleAbilityDefinition GetAbilityDefinition() =>
             _comboQueue.TryPeek(out var abilityDefinition) ? abilityDefinition : null;
 
         public override void CastAbility(TargetingManager targetingManager)
