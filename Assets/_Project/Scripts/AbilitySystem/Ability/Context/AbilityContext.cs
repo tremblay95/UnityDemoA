@@ -14,7 +14,7 @@ namespace UnityDemoA
         
         protected void PerformCast(TargetingManager targetingManager)
         {
-            _castCoroutine = targetingManager.StartCoroutine(AbilityDefinition.Cast(GetAbilityDefinition(), targetingManager, 
+            _castCoroutine = targetingManager.StartCoroutine(GetAbilityDefinition().Cast(targetingManager, 
                 OnAbilityCastComplete, OnAbilityCastCancelled));
         }
         

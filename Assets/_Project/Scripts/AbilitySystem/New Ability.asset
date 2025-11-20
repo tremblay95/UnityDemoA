@@ -15,7 +15,7 @@ MonoBehaviour:
   abilityName: New Ability
   cooldownTime: 2
   targetingStrategy:
-    rid: 6864085511065829449
+    rid: 2643559557016059969
   castingCost:
     rid: 6864085397805728035
   gameplayEffects:
@@ -26,6 +26,9 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: 2643559557016059969
+      type: {class: SelfTargeting, ns: UnityDemoA, asm: Assembly-CSharp}
+      data: 
     - rid: 6864085397805728035
       type: {class: NoCost, ns: UnityDemoA, asm: Assembly-CSharp}
       data: 
@@ -42,12 +45,3 @@ MonoBehaviour:
       type: {class: DamageEffect, ns: UnityDemoA, asm: Assembly-CSharp}
       data:
         _damage: 10
-    - rid: 6864085511065829449
-      type: {class: MeleeTargeting, ns: UnityDemoA, asm: Assembly-CSharp}
-      data:
-        _range: 2
-        _sweepAngle: 45
-        _verticalOffset: 0.5
-        _layerMask:
-          serializedVersion: 2
-          m_Bits: 1
