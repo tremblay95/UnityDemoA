@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using ImprovedTimers;
 using KBCore.Refs;
 using UnityEngine;
@@ -27,7 +26,7 @@ namespace UnityDemoA
         private const float ZeroF = 0f;
         private Transform mainCamera;
         
-        private float currentSpeed;
+        private float animatorMoveSpeed;
         private float velocity;
 
         // Timers
@@ -103,7 +102,7 @@ namespace UnityDemoA
 
         private void UpdateAnimator()
         {
-            animator.SetFloat(SpeedHash, currentSpeed);
+            animator.SetFloat(SpeedHash, animatorMoveSpeed);
         }
 
         private void FixedUpdate() => stateMachine.FixedUpdate();
@@ -121,7 +120,6 @@ namespace UnityDemoA
         {
             var moveDirection = new Vector3(input.Direction.x, 0, input.Direction.y);
             var adjustedDirection = Quaternion.AngleAxis(mainCamera.eulerAngles.y, Vector3.up) * moveDirection;
-
             
             if (adjustedDirection.magnitude > ZeroF)
             {
@@ -132,7 +130,6 @@ namespace UnityDemoA
             else
             {
                 SmoothSpeed(ZeroF);
-                
                 rb.linearVelocity = new Vector3(ZeroF, rb.linearVelocity.y, ZeroF);
             }
         }
@@ -149,9 +146,6 @@ namespace UnityDemoA
             rb.linearVelocity = new Vector3(velocity.x, rb.linearVelocity.y, velocity.z);
         }
 
-        private void SmoothSpeed(float value)
-        {
-            currentSpeed = Mathf.SmoothDamp(currentSpeed, value, ref velocity, smoothTime);
-        }
+        private void SmoothSpeed(float value) => animatorMoveSpeed = Mathf.SmoothDamp(animatorMoveSpeed, value, ref velocity, smoothTime);
     }
 }
