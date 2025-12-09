@@ -8,13 +8,9 @@ namespace UnityDemoA
 
         public override void OnEnter()
         {
+            player.StopMovement();
             animator.CrossFade(AttackHash, 0f);
             player.Attack();
-        }
-
-        public override void OnFixedUpdate()
-        {
-            player.HandleMovement();
         }
     }
 }

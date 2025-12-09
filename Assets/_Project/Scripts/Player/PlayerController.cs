@@ -114,7 +114,9 @@ namespace UnityDemoA
             Debug.Log("Attack executed!");
             // Attack logic here (e.g., raycast to detect hit, apply damage, etc
         }
-        
+
+        public void StopMovement() => rb.linearVelocity = Vector3.zero;
+
         public void HandleMovement()
         {
             var moveDirection = new Vector3(input.Direction.x, 0, input.Direction.y);
