@@ -21,9 +21,9 @@ namespace UnityDemoA
             
             if (_targetingManager.Input != null)
             {
-                _targetingManager.Input.Attack += OnAttack;
-                _targetingManager.Input.SecondaryAction += _targetingManager.CancelTargeting;
-                _targetingManager.Input.SecondaryAction += Cancel;
+                _targetingManager.Input.Activate += OnActivate;
+                _targetingManager.Input.Cancel += _targetingManager.CancelTargeting;
+                _targetingManager.Input.Cancel += Cancel;
             }
         }
 
@@ -32,7 +32,7 @@ namespace UnityDemoA
             // Todo: Highlight targets in range
         }
 
-        private void OnAttack()
+        private void OnActivate()
         {
             if (!_isTargeting) { return; }
 
@@ -66,9 +66,9 @@ namespace UnityDemoA
             
             if (_targetingManager.Input != null)
             {
-                _targetingManager.Input.Attack += OnAttack;
-                _targetingManager.Input.SecondaryAction -= _targetingManager.CancelTargeting;
-                _targetingManager.Input.SecondaryAction -= Cancel;
+                _targetingManager.Input.Activate += OnActivate;
+                _targetingManager.Input.Cancel -= _targetingManager.CancelTargeting;
+                _targetingManager.Input.Cancel -= Cancel;
             }
         }
     }

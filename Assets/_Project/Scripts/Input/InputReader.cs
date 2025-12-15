@@ -11,10 +11,12 @@ namespace UnityDemoA
     {
         public event UnityAction<Vector2> Move = delegate { };
         public event UnityAction<Vector2, bool> Look = delegate { };
-        public event UnityAction Attack = delegate { };
+        public event UnityAction Activate = delegate { };
         
         public event UnityAction<RaycastHit> Click = delegate { };
-        public event UnityAction SecondaryAction = delegate { };
+        public event UnityAction Cancel = delegate { };
+
+        public event UnityAction<int> AbilitySelected = delegate { };
         
         private PlayerInputActions _inputActions;
         
@@ -44,11 +46,11 @@ namespace UnityDemoA
 
         private bool IsDeviceMouse(CallbackContext context) => context.control.device.name == "Mouse";
 
-        public void OnAttack(CallbackContext context)
+        public void OnActivate(CallbackContext context)
         {
             if (context.started)
             {
-                Attack.Invoke();
+                Activate.Invoke();
                 if (IsDeviceMouse(context))
                 {
                     var ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
@@ -60,39 +62,14 @@ namespace UnityDemoA
             }
         }
 
-        public void OnSecondaryAction(CallbackContext context)
+        public void OnCancel(CallbackContext context)
         {
-            if (context.started) { SecondaryAction.Invoke(); }
+            if (context.started) { Cancel.Invoke(); }
         }
 
-        public void OnInteract(CallbackContext context)
-        {
-            // noop
-        }
-
-        public void OnCrouch(CallbackContext context)
-        {
-            // noop
-        }
-
-        public void OnJump(CallbackContext context)
-        {
-            // noop
-        }
-
-        public void OnPrevious(CallbackContext context)
-        {
-            // noop
-        }
-
-        public void OnNext(CallbackContext context)
-        {
-            // noop
-        }
-
-        public void OnSprint(CallbackContext context)
-        {
-            // noop
-        }
+        public void OnAbility1(CallbackContext context) => AbilitySelected.Invoke(1);
+        public void OnAbility2(CallbackContext context) => AbilitySelected.Invoke(2);
+        public void OnAbility3(CallbackContext context) => AbilitySelected.Invoke(3);
+        public void OnAbility4(CallbackContext context) => AbilitySelected.Invoke(4);
     }
 }

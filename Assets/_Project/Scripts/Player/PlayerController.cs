@@ -75,17 +75,17 @@ namespace UnityDemoA
 
         private void OnEnable()
         {
-            input.Attack += OnAttack;
+            input.Activate += OnActivate;
         }
         
         private void OnDisable()
         {
-            input.Attack -= OnAttack;
+            input.Activate -= OnActivate;
         }
 
         private void Start() => input.EnableInputActions();
 
-        private void OnAttack()
+        private void OnActivate()
         {
             if (!attackTimer.IsRunning)
             {

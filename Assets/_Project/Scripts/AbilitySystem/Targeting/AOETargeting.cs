@@ -31,8 +31,8 @@ namespace UnityDemoA
             if (_targetingManager.Input != null)
             {
                 _targetingManager.Input.Click += OnClick;
-                _targetingManager.Input.SecondaryAction += _targetingManager.CancelTargeting;
-                _targetingManager.Input.SecondaryAction += Cancel;
+                _targetingManager.Input.Cancel += _targetingManager.CancelTargeting;
+                _targetingManager.Input.Cancel += Cancel;
             }
         }
         
@@ -74,8 +74,8 @@ namespace UnityDemoA
             if (_targetingManager.Input != null)
             {
                 _targetingManager.Input.Click -= OnClick;
-                _targetingManager.Input.SecondaryAction -= _targetingManager.CancelTargeting;
-                _targetingManager.Input.SecondaryAction -= Cancel;
+                _targetingManager.Input.Cancel -= _targetingManager.CancelTargeting;
+                _targetingManager.Input.Cancel -= Cancel;
             }
         }
     }
