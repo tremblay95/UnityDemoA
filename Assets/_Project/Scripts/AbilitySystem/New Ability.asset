@@ -15,7 +15,7 @@ MonoBehaviour:
   abilityName: New Ability
   cooldownTime: 2
   targetingStrategy:
-    rid: 2643559557016059969
+    rid: 1848962243637805121
   castingCost:
     rid: 6864085397805728035
   gameplayEffects:
@@ -26,9 +26,15 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 2643559557016059969
-      type: {class: SelfTargeting, ns: UnityDemoA, asm: Assembly-CSharp}
-      data: 
+    - rid: 1848962243637805121
+      type: {class: AOETargeting, ns: UnityDemoA, asm: Assembly-CSharp}
+      data:
+        _groundMarkerPrefab: {fileID: 9103696466329850007, guid: 95bb256901721b24f9f839d2b4325dc1, type: 3}
+        _aoeRadius: 5
+        _groundLayerMask:
+          serializedVersion: 2
+          m_Bits: 64
+        _groundOffset: 0.1
     - rid: 6864085397805728035
       type: {class: NoCost, ns: UnityDemoA, asm: Assembly-CSharp}
       data: 
@@ -38,8 +44,8 @@ MonoBehaviour:
     - rid: 6864085397805728038
       type: {class: KnockbackEffect, ns: UnityDemoA, asm: Assembly-CSharp}
       data:
-        _knockbackForce: 3
-        _knockbackLift: 1
+        _knockbackForce: 5
+        _knockbackLift: 2
         _forceMode: 2
     - rid: 6864085397805728039
       type: {class: DamageEffect, ns: UnityDemoA, asm: Assembly-CSharp}

@@ -26,23 +26,39 @@ namespace UnityDemoA
 
         public static IEnumerator Cast(SingleAbilityDefinition abilityDefinition, TargetingManager targetingManager, Action completedCallback = null, Action cancelledCallback = null)
         {
+            Debug.Log($"[Ability] Request: {abilityDefinition.abilityName} (Caster: {targetingManager.name})");
             if (!abilityDefinition.castingCost.CanAfford())
             {
+                Debug.Log($"[Ability] Cannot afford cost: {abilityDefinition.abilityName}");
                 cancelledCallback?.Invoke();
                 yield break;
             }
             
+            Debug.Log($"[Ability] Begin Targeting: {abilityDefinition.abilityName}");
             abilityDefinition.targetingStrategy.BeginTargeting(targetingManager);
 
             yield return new WaitUntil(() => targetingManager.Completed || targetingManager.Cancelled);
 
-            if (targetingManager.Cancelled || !abilityDefinition.castingCost.PayCost())
+            Debug.Log(
+                targetingManager.Completed
+                    ? $"[Ability] Targeting confirmed: {abilityDefinition.abilityName}"
+                    : $"[Ability] Targeting cancelled: {abilityDefinition.abilityName}"
+            );
+
+            if (targetingManager.Cancelled)
             {
                 cancelledCallback?.Invoke();
                 yield break;
             }
 
-            // Todo: yield until execution strategy is complete
+            if (!abilityDefinition.castingCost.PayCost())
+            {
+                Debug.Log($"[Ability] Cannot afford cost: {abilityDefinition.abilityName}");
+                cancelledCallback?.Invoke();
+                yield break;
+            }
+
+            Debug.Log($"[Ability] Executing {abilityDefinition.abilityName} Targets: {targetingManager.Targets.Count}");
             abilityDefinition.executionStrategy.Execute(abilityDefinition.gameplayEffects, targetingManager.transform, targetingManager.Targets);
 
             completedCallback?.Invoke();
