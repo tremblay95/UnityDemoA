@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -14,68 +15,45 @@ namespace UnityDemoA
         [SerializeField] private float _aoeRadius = 5f;
         [SerializeField] private LayerMask _groundLayerMask = 1;
         [SerializeField] private float _groundOffset = 0.1f;
-        
+
         private GameObject _groundMarkerInstance;
 
-        protected override void Start()
+        protected override bool Begin()
         {
-            _isTargeting = true;
-            
-            _targetingManager.SetCurrentStrategy(this);
+            if (!_groundMarkerPrefab || !_targetingManager.Input || !_targetingManager.Camera) return false;
 
-            if (_groundMarkerPrefab != null)
-            {
-                _groundMarkerInstance = Object.Instantiate(_groundMarkerPrefab, Vector3.zero.Add(y: _groundOffset), Quaternion.identity);
-            }
+            _groundMarkerInstance = Object.Instantiate(_groundMarkerPrefab, Vector3.zero.Add(y: _groundOffset), Quaternion.identity);
+            _targetingManager.TargetingEnded += End;
 
-            if (_targetingManager.Input != null)
-            {
-                _targetingManager.Input.Click += OnClick;
-                _targetingManager.Input.Cancel += _targetingManager.CancelTargeting;
-                _targetingManager.Input.Cancel += Cancel;
-            }
+            return true;
         }
-        
-        public override void Update()
+
+        public override IEnumerable<ITargetable> Update()
         {
-            if (!_isTargeting || _groundMarkerInstance == null) { return; }
-            
-            _groundMarkerInstance.transform.position = GetWorldMarkerPosition().Add(y: _groundOffset);
+            if (!_groundMarkerInstance) { return null; }
+
+            var groundHitPosition = GetWorldMarkerPosition();
+            _groundMarkerInstance.transform.position = groundHitPosition.Add(y: _groundOffset);
+
+            return Physics.OverlapSphere(groundHitPosition, _aoeRadius)
+                .Select(c => c.GetComponentInParent<ITargetable>())
+                .Where(t => t != null)
+                .Distinct();
         }
 
         private Vector3 GetWorldMarkerPosition() // Todo: handle gamepad input
         {
-            if (_targetingManager.Camera == null) { return Vector3.zero; }
-            
+            if (!_targetingManager.Camera) { return Vector3.zero; }
+
             var ray = _targetingManager.Camera.ScreenPointToRay(Mouse.current.position.ReadValue());
             return Physics.Raycast(ray, out var hit, 100f, _groundLayerMask) ? hit.point : Vector3.zero;
         }
 
-        private void OnClick(RaycastHit hit)
+        public override void End()
         {
-            if (!_isTargeting) { return; }
-
-            var targets = Physics.OverlapSphere(hit.point, _aoeRadius).Select(c => c.transform).ToList();
-
-            _targetingManager.CompleteTargeting(targets);
-            Cancel();
-        }
-        
-        public override void Cancel()
-        {
-            _isTargeting = false;
-            _targetingManager.ClearCurrentStrategy();
-            
-            if (_groundMarkerInstance != null)
+            if (_groundMarkerInstance)
             {
                 Object.Destroy(_groundMarkerInstance);
-            }
-            
-            if (_targetingManager.Input != null)
-            {
-                _targetingManager.Input.Click -= OnClick;
-                _targetingManager.Input.Cancel -= _targetingManager.CancelTargeting;
-                _targetingManager.Input.Cancel -= Cancel;
             }
         }
     }

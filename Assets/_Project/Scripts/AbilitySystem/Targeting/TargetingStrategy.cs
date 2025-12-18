@@ -1,21 +1,20 @@
-﻿namespace UnityDemoA
+﻿using System.Collections.Generic;
+
+namespace UnityDemoA
 {
     public abstract class TargetingStrategy
     {
         protected TargetingManager _targetingManager;
-        protected bool _isTargeting = false;
-        public bool IsTargeting => _isTargeting;
 
-        public void BeginTargeting(TargetingManager targetingManager)
+        public bool Begin(TargetingManager targetingManager)
         {
-            targetingManager.ClearTargets();
-            targetingManager.Reset();
+            if (!targetingManager) { return false; }
             _targetingManager = targetingManager;
-            
-            Start();
+
+            return Begin();
         }
-        protected abstract void Start();
-        public virtual void Update() { }
-        public virtual void Cancel() { }
+        protected abstract bool Begin();
+        public virtual IEnumerable<ITargetable> Update() { return null; }
+        public virtual void End() { }
     }
 }

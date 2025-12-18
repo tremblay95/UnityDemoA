@@ -7,9 +7,9 @@ namespace UnityDemoA
     [Serializable]
     public class BasicExecution : IAbilityExecutionStrategy
     {
-        public void Execute(List<IGameplayEffect> effects, Transform source, IReadOnlyList<Transform> targets)
+        public void Execute(List<IGameplayEffect> effects, Transform source, TargetData targetData)
         {
-            foreach (var target in targets)
+            foreach (var target in targetData.targets)
             {
                 var handlerManager = target.GetComponent<EffectHandlerManager>();
                 if (handlerManager != null)

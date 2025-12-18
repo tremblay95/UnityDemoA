@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using KBCore.Refs;
 using UnityEngine;
 
@@ -6,51 +8,108 @@ namespace UnityDemoA
 {
     public class TargetingManager : ValidatedMonoBehaviour
     {
+        public event Action<TargetData> TargetsConfirmed;
+        public event Action TargetingCancelled;
+        public event Action TargetingEnded;
+
         [SerializeField] InputReader _input;
         [SerializeField, Child] Camera _camera;
-        
-        List<Transform> _targets = new();
-        
+
+        private readonly HashSet<ITargetable> _targets = new();
+
+        public bool IsTargeting => _targetingStrategy != null;
+
         public InputReader Input => _input;
         public Camera Camera => _camera;
-        public IReadOnlyList<Transform> Targets => _targets;
-        public bool Completed { get; private set; }
-        public bool Cancelled { get; private set; }
-        
-        
-        private TargetingStrategy _currentTargetingStrategy;
+
+        private TargetingStrategy _targetingStrategy;
+
+        public bool BeginTargeting(TargetingStrategy targetingStrategy)
+        {
+            if (IsTargeting) { return false; }
+            // Todo: request TargetingInputMode
+            _input.Activate += OnConfirm;
+            _input.Cancel += OnCancel;
+
+            _targetingStrategy = targetingStrategy;
+            if (!_targetingStrategy.Begin(this))
+            {
+                OnCancel();
+                return false;
+            }
+
+            return true;
+        }
 
         private void Update()
         {
-            if (_currentTargetingStrategy is { IsTargeting: true })
+            if (IsTargeting)
             {
-                _currentTargetingStrategy.Update();
+                UpdateTargets(_targetingStrategy.Update().ToHashSet());
             }
         }
 
-        public void SetCurrentStrategy(TargetingStrategy targetingStrategy) => _currentTargetingStrategy = targetingStrategy;
-
-        public void ClearCurrentStrategy()
+        private void UpdateTargets(HashSet<ITargetable> newTargets)
         {
-            _currentTargetingStrategy = null;
+            foreach (var target in _targets)
+            {
+                if (!newTargets.Contains(target))
+                {
+                    target.Unhighlight();
+                }
+            }
+
+            foreach (var target in newTargets)
+            {
+                if (!_targets.Contains(target))
+                {
+                    target.Highlight();
+                }
+            }
+
+            _targets.Clear();
+            _targets.UnionWith(newTargets);
         }
 
-        public void CompleteTargeting(List<Transform> targets)
+        private void OnConfirm()
         {
-            Cancelled = false;
-            Completed = true;
-            _targets = targets;
+            if (IsTargeting)
+            {
+                TargetsConfirmed?.Invoke(new TargetData { targets = _targets.Select(t => t.Transform).ToList() });
+                TargetingEnded?.Invoke();
+                Reset();
+            }
         }
 
-        public void ClearTargets() => _targets.Clear();
-
-        public void CancelTargeting()
+        private void OnCancel()
         {
-            Completed = false;
-            Cancelled = true;
-            ClearTargets();
+            if (IsTargeting)
+            {
+                TargetingCancelled?.Invoke();
+                TargetingEnded?.Invoke();
+                Reset();
+            }
         }
 
-        public void Reset() => Completed = Cancelled = false;
+        private void Reset()
+        {
+            foreach (var target in _targets)
+            {
+                target.Unhighlight();
+            }
+
+            _targets.Clear();
+
+            _targetingStrategy = null;
+
+            TargetsConfirmed = null;
+            TargetingCancelled = null;
+            TargetingEnded = null;
+
+            _input.Activate -= OnConfirm;
+            _input.Cancel -= OnCancel;
+
+            // Todo: release TargetingInputMode
+        }
     }
 }

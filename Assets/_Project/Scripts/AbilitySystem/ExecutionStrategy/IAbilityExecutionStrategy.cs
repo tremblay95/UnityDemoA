@@ -5,6 +5,6 @@ namespace UnityDemoA
 {
     public interface IAbilityExecutionStrategy
     {
-        void Execute(List<IGameplayEffect> effects, Transform source, IReadOnlyList<Transform> targets);
+        void Execute(List<IGameplayEffect> effects, Transform source, TargetData targetData);
     }
 }

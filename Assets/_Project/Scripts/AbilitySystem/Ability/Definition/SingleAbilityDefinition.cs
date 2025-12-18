@@ -26,6 +26,10 @@ namespace UnityDemoA
 
         public static IEnumerator Cast(SingleAbilityDefinition abilityDefinition, TargetingManager targetingManager, Action completedCallback = null, Action cancelledCallback = null)
         {
+            // This will be refactored later when I move this cast logic into the AbilityContext
+            TargetData targetData = null;
+            targetingManager.TargetsConfirmed += t => targetData = t;
+
             Debug.Log($"[Ability] Request: {abilityDefinition.abilityName} (Caster: {targetingManager.name})");
             if (!abilityDefinition.castingCost.CanAfford())
             {
@@ -33,19 +37,24 @@ namespace UnityDemoA
                 cancelledCallback?.Invoke();
                 yield break;
             }
-            
-            Debug.Log($"[Ability] Begin Targeting: {abilityDefinition.abilityName}");
-            abilityDefinition.targetingStrategy.BeginTargeting(targetingManager);
 
-            yield return new WaitUntil(() => targetingManager.Completed || targetingManager.Cancelled);
+            Debug.Log($"[Ability] Begin Targeting: {abilityDefinition.abilityName}");
+            if (!targetingManager.BeginTargeting(abilityDefinition.targetingStrategy))
+            {
+                Debug.Log($"[Ability] Targeting failed: {abilityDefinition.abilityName}");
+                cancelledCallback?.Invoke();
+                yield break;
+            }
+
+            yield return new WaitUntil(() => !targetingManager.IsTargeting);
 
             Debug.Log(
-                targetingManager.Completed
+                targetData is { targets: {Count: > 0} }
                     ? $"[Ability] Targeting confirmed: {abilityDefinition.abilityName}"
                     : $"[Ability] Targeting cancelled: {abilityDefinition.abilityName}"
             );
 
-            if (targetingManager.Cancelled)
+            if (targetData is not { targets: {Count: > 0} })
             {
                 cancelledCallback?.Invoke();
                 yield break;
@@ -58,8 +67,8 @@ namespace UnityDemoA
                 yield break;
             }
 
-            Debug.Log($"[Ability] Executing {abilityDefinition.abilityName} Targets: {targetingManager.Targets.Count}");
-            abilityDefinition.executionStrategy.Execute(abilityDefinition.gameplayEffects, targetingManager.transform, targetingManager.Targets);
+            Debug.Log($"[Ability] Executing {abilityDefinition.abilityName} Targets: {targetData.targets.Count}");
+            abilityDefinition.executionStrategy.Execute(abilityDefinition.gameplayEffects, targetingManager.transform, targetData);
 
             completedCallback?.Invoke();
         }
